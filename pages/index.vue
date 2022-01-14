@@ -2,14 +2,38 @@
   <div class="index">
     <Header title="Accueil"/>
     <NewPost placeholder="Raconte moi ta vie" />
-    <Timeline/>
+    <div v-if="loading">Loadings</div>
+    <Timeline :feedCus="feedCus"/>
   </div>
 </template>
 
 <script>
 import Header from '../components/Header.vue'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  components: { Header },}
+    components: { Header },
+    // middleware: 'auth',
+     data() {
+        return {
+          loading: false,
+        }
+      },
+    computed: {
+        ...mapGetters(['user']),
+        ...mapGetters(['feedCus']),
+    },
+    methods:{
+        ...mapActions(['getFeedCus']),
+        getDataCus() {
+          this.loading = true
+          this.getFeedCus()
+          this.loading = false
+        },
+    }, 
+    async created() {
+      await this.getDataCus()
+    },
+}
 </script>
 
 

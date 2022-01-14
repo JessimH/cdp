@@ -1,59 +1,62 @@
 <template>
   <div class="container register">
     <img class="register_logo mb-5" src="~/assets/images/logo.png" />
-    <form enctype='multipart/form-data' class="form_register">
+    <form @submit.prevent="formValidation" enctype='multipart/form-data' class="form_register">
       <div class="form-group">
         <label for="exampleInputUsername1">Nom d'utilisateur</label>
         <input
           type="username"
+          v-model="registerForm.name"
           class="form-control"
           id="exampleInputUsername1"
           aria-describedby="usernameHelp"
           placeholder="Nom d'utilisateur"
           required
         />
-        <!-- <div v-if="errors.name.length > 0">
+        <div v-if="errors.name.length > 0">
           <div v-for="error in errors.name" :key="error">
             {{ error }}
           </div>
-        </div> -->
+        </div>
       </div>
 
       <div class="form-group">
         <label for="exampleInputEmail1">Email</label>
         <input
           type="email"
+          v-model="registerForm.email"
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           placeholder="Enter email"
           required
         />
-        <!-- <div v-if="errors.email.length > 0">
+        <div v-if="errors.email.length > 0">
           <div v-for="error in errors.email" :key="error">
             {{ error }}
           </div>
-        </div> -->
+        </div>
       </div>
 
       <div class="form-group">
-        <input type="file">
+        <input id="file" @change="onFileChange" type="file">
       </div>
-
+    
       <div class="form-group">
         <label for="exampleInputEmail1">Mot de passe</label>
         <input
           type="password"
+          v-model="registerForm.password"
           class="form-control"
           id="exampleInputPassword1"
           placeholder="Mot de passe"
           required
         />
-        <!-- <div v-if="errors.password.length > 0">
+        <div v-if="errors.password.length > 0">
           <div v-for="error in errors.password" :key="error">
             {{ error }}
           </div>
-        </div> -->
+        </div>
       </div>
 
       <button type="submit" class="btn register_button mt-3 mb-4">
@@ -67,6 +70,78 @@
   </div>
 </template>
 
+<script>
+
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+
+export default {
+  data() {
+    return {
+      previewImage: null,
+      registerForm: {
+        name: '',
+        email: '',
+        password: '',
+        profile_pic: '',
+        image: ''
+      },
+      errors: {
+        name: [],
+        email: [],
+        password: [],
+        profile_pic: [],
+        image: ''
+      },
+    }
+  },
+  methods: {
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this.registerForm;
+
+      reader.onload = (e) => {
+        vm.image = e.target.result;
+      };
+        reader.readAsDataURL(file);
+      },
+
+      removeImage: function (e) {
+        this.image = '';
+    },
+    ...mapActions(['register']),
+    formValidation() {
+      this.errors.name = []
+      this.errors.email = []
+      this.errors.profile_pic = []
+      this.errors.password = []
+      if (this.registerForm.name.trim().length == 0) {
+        this.errors.name.push('This field is required')
+      }
+      if (this.registerForm.profile_pic.trim().length == 0) {
+        this.errors.profile_pic.push('This field is required')
+      }
+      if (this.registerForm.email.trim().length == 0) {
+        this.errors.email.push('This field is required')
+      }
+      if (this.registerForm.password.trim().length == 0) {
+        this.errors.password.push('This field is required')
+      }
+      if (this.errors.password.length > 0 || this.errors.email.length > 0) {
+        return
+      } else {
+        // this.$store.dispatch('register', this.registerForm);
+        this.register(this.registerForm)
+      }
+    },
+  },
+}
 </script>
 <style>
 .layout {

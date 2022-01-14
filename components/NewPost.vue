@@ -2,7 +2,7 @@
     <div class="new_post">
          <NuxtLink class="post_link" to="/profile/jessim">
             <div class="post_profile_pic">
-                <img src="https://pbs.twimg.com/profile_images/1462725045281820672/YU2hzUcr_400x400.jpg" alt="">
+                <img :src="user.data.url_image" alt="">
             </div>
         </NuxtLink>
        <div class="post_body">
@@ -23,6 +23,9 @@ import {
   
 } from 'bootstrap-vue'
 
+import { mapGetters, mapActions } from 'vuex'
+
+
 export default {
     props: ['placeholder'],
     components: {
@@ -30,6 +33,9 @@ export default {
         BIconHeart,
         BIconHeartFill,
         BIconChat,
+    },
+    computed: {
+        ...mapGetters(['user']),
     },
 }
 </script>

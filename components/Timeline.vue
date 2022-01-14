@@ -1,20 +1,13 @@
 <template>
-    <div class="timeline">
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
-       <Post/>
+    <div class="timeline">      
+       <Post v-for="post in feedCus.posts" :key="post.id" :post="post"/>
     </div>
 </template>
 
 <script>
+export default {
+    props: ['feedCus'],
+}
 </script>
 
 <style>

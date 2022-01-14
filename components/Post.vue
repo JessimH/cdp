@@ -2,26 +2,26 @@
     <div class="post">
          <NuxtLink class="post_link" to="/profile/jessim">
             <div class="post_profile_pic">
-                <img src="https://pbs.twimg.com/profile_images/1462725045281820672/YU2hzUcr_400x400.jpg" alt="">
+                <img :src="post.user.url_image" alt="">
             </div>
         </NuxtLink>
        <div class="post_body">
-           <p class="post_header"><span>Sato</span> @dzsatoru - 1h</p>
+           <p class="post_header"><span>{{post.user.name}}</span> @{{post.user.name}} - {{post.created_at}}</p>
            <div class="post_content">
-                <p>l'avenir appartient à ceux qui font croire au monde que l'avenir appartient à ceux qui se lèvent tôt</p>
-                <div class="post_img">
-                    <img src="https://pbs.twimg.com/media/FI6G3LTWYAM4PzU?format=jpg&name=900x900" alt="">
+                <p>{{post.content}}</p>
+                <div v-if="post.url_image" class="post_img">
+                    <img :src="post.url_image" alt="">
                 </div>
            </div>
            <div class="post_btns">
-               <button>
+               <button @click="likePost()">
                     <b-icon-heart class="post_icon"></b-icon-heart>
-                    5k
+                    {{post.likes_count}}
                 </button>
-                <NuxtLink class="post_link" to="/post/ziefvbzepr">
+                <NuxtLink class="post_link" :to="'/post/'+post.id">
                     <button> 
                         <b-icon-chat class="post_icon"></b-icon-chat>
-                        19k
+                        {{post.comments.length}}
                     </button>
                 </NuxtLink>
            </div>
@@ -37,14 +37,27 @@ import {
   BIconChat,
   
 } from 'bootstrap-vue'
+import { mapGetters, mapActions } from 'vuex'
+
 
 export default {
-  components: {
-    BIcon,
-    BIconHeart,
-    BIconHeartFill,
-    BIconChat,
-  },
+    props: ['post'],
+    components: {
+        BIcon,
+        BIconHeart,
+        BIconHeartFill,
+        BIconChat,
+    },
+    methods:{
+        ...mapActions(['like']),
+        likePost(){
+            let data = {
+                type: 'post',
+                post_id: this.post.id
+            }
+            this.like(data)
+        }
+    }
 }
 </script>
 

@@ -10,21 +10,22 @@
         </div>
         <div class="profile_top_pic">
             <div class="profile_profile_pic">
-                <img src="https://pbs.twimg.com/profile_images/1462725045281820672/YU2hzUcr_400x400.jpg" alt="">
+                <img :src="user.data.url_image" alt="">
             </div>
         </div>
         <div class="profile_bio">
-          <p class="profile_username">Sato</p>
-          <p>bio bio bio biob iob boi boie oib zpief aozefznjbevzld cmlze roz efivze kr zlero lazremzl erkglbzetg</p>
+          <p class="profile_username">{{user.data.name}}</p>
+          <p>{{user.data.description}}</p>
         </div>
         <NuxtLink class="" to="/parametres">Edit profile</NuxtLink>
       </div>
     </div>
-    <Timeline />
+    <Timeline :comments="comments" />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import {
   BIcon,
   BIconArrowLeft,
@@ -35,7 +36,12 @@ export default {
     BIcon,
     BIconArrowLeft
   },
+  middleware: 'auth',
+  computed: {
+    ...mapGetters(['user']),
+  },
 }
+
 </script>
 
 

@@ -15,6 +15,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
+    "axios": "^0.24.0",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.15.1",
@@ -23,9 +24,6 @@
     "vue-feather-icons": "^5.1.0"
   },
   "devDependencies": {
-    "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/moment": "^1.6.1",
-    "@nuxtjs/laravel-echo": "^1.1.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.3.2"
   }

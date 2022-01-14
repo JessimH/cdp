@@ -1,22 +1,22 @@
 <template>
     <div class="container login">
         <img  class="login_logo mb-5" src="~/assets/images/logo.png" />
-        <form class="form_login">
+        <form @submit.prevent="formValidation" class="form_login">
             <div class="form-group">
-                <input type="email"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <!-- <div v-if="errors.email.length > 0">
+                <input type="email" v-model="loginForm.email"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <div v-if="errors.email.length > 0">
                     <div v-for="error in errors.email" :key="error">
                         {{ error }}
                     </div>
-                 </div> -->
+                 </div>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                <!-- <div v-if="errors.password.length > 0">
+                <input type="password"  v-model="loginForm.password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <div v-if="errors.password.length > 0">
                     <div v-for="error in errors.password" :key="error">
                         {{ error }}
                     </div>
-                 </div> -->
+                 </div>
             </div>
             <a class="forgot" href="">Mot de passe oublié ?</a>
             <button type="submit" class="btn login_button mt-3 mb-4">Connexion</button>
@@ -27,6 +27,40 @@
     </div>
 </template>
 <script>
+import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
+export default{
+    data() {
+        return {
+            loginForm: {
+                email: "",
+                password: "",
+            },
+            errors: {
+                email: [],
+                password: [],
+            },
+        };
+    },
+    methods: {
+        ...mapActions(["login"]),
+        formValidation() {
+            this.errors.email = [];
+            this.errors.password = [];
+            if (this.loginForm.email.trim().length == 0) {
+                this.errors.email.push("This field is required");
+            }
+            if (this.loginForm.password.trim().length == 0) {
+                this.errors.password.push("This field is required");
+            }
+            if (this.errors.password.length > 0 || this.errors.email.length > 0){
+                return;
+            }else{
+                // this.$store.dispatch('login', this.loginForm);
+                this.login(this.loginForm);
+            }
+        },
+    },
+}
 </script>
 <style>
 .layout{
