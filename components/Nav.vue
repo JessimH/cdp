@@ -25,6 +25,16 @@
                 </NuxtLink>
             </li>
             <li>
+                <NuxtLink v-if="this.$route.path == '/parametres'" class="navigation_link_current" to="/">
+                    <b-icon-gear-fill class="navigation_icon"></b-icon-gear-fill>
+                    Parametres
+                </NuxtLink>
+                <NuxtLink v-else class="navigation_link" to="/parametres">
+                    <b-icon-gear class="navigation_icon"></b-icon-gear>
+                   Parametres
+                </NuxtLink>
+            </li>
+            <li>
                 <NuxtLink v-if="this.$route.path == '/mentions'" class="navigation_link_current" to="/">
                     <b-icon-question-circle-fill class="navigation_icon"></b-icon-question-circle-fill>
                     Mentions légales
@@ -51,7 +61,9 @@ import {
   BIconBell,
   BIconBellFill,
   BIconPerson,
-  BIconPersonFill
+  BIconPersonFill,
+  BIconGearFill,
+  BIconGear,
 } from 'bootstrap-vue'
 
 export default {
@@ -66,6 +78,8 @@ export default {
     BIconQuestionCircleFill,
     BIconPerson,
     BIconPersonFill,
+    BIconGearFill,
+    BIconGear,
   },
 }
 </script>

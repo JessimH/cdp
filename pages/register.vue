@@ -1,7 +1,7 @@
 <template>
   <div class="container register">
     <img class="register_logo mb-5" src="~/assets/images/logo.png" />
-    <form @submit.prevent="formValidation" class="form_register">
+    <form enctype='multipart/form-data' class="form_register">
       <div class="form-group">
         <label for="exampleInputUsername1">Nom d'utilisateur</label>
         <input
@@ -35,6 +35,11 @@
           </div>
         </div> -->
       </div>
+
+      <div class="form-group">
+        <input type="file">
+      </div>
+
       <div class="form-group">
         <label for="exampleInputEmail1">Mot de passe</label>
         <input

@@ -30,7 +30,7 @@
            </div>
        </div>
     </div>
-    <NewPost/>
+    <NewPost placeholder="Commenter"/>
     <Timeline/>
   </div>
 </template>

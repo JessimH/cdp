@@ -7,7 +7,7 @@
         </NuxtLink>
        <div class="post_body">
            <form action="">
-                <input type="text" placeholder="Poster votre réponse">
+                <input type="text" :placeholder="placeholder">
                 <button type="submit">Envoyer</button>
            </form>
        </div>
@@ -24,12 +24,13 @@ import {
 } from 'bootstrap-vue'
 
 export default {
-  components: {
-    BIcon,
-    BIconHeart,
-    BIconHeartFill,
-    BIconChat,
-  },
+    props: ['placeholder'],
+    components: {
+        BIcon,
+        BIconHeart,
+        BIconHeartFill,
+        BIconChat,
+    },
 }
 </script>
 

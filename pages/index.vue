@@ -1,6 +1,7 @@
 <template>
   <div class="index">
     <Header title="Accueil"/>
+    <NewPost placeholder="Raconte moi ta vie" />
     <Timeline/>
   </div>
 </template>

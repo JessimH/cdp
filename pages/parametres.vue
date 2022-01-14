@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div>
-        <Header :title="this.$route.params.username"/>
+        <Header title="Parametres"/>
     </div>
     <div class="profile">
       <div class="profile_top">
@@ -17,10 +17,15 @@
           <p class="profile_username">Sato</p>
           <p>bio bio bio biob iob boi boie oib zpief aozefznjbevzld cmlze roz efivze kr zlero lazremzl erkglbzetg</p>
         </div>
-        <NuxtLink class="" to="/parametres">Edit profile</NuxtLink>
       </div>
     </div>
-    <Timeline />
+    <form enctype='multipart/form-data' class="parametres" action="">
+      <input type="text" placeholder="Username">
+      <input type="email" placeholder="Email">
+      <input type="file">
+      <input type="password" placeholder="Password">
+      <button type="submit">Enregistrer</button>
+    </form>
   </div>
 </template>
 
@@ -112,6 +117,34 @@ export default {
   font-weight: 900;
   font-size: 1.3rem;
   color: white;
+}
+.parametres{
+  padding: 13px;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.parametres input{
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 16px;
+  outline: none;
+}
+.parametres button{
+  background: transparent;
+  border: 1px solid #00DC81;
+  border-radius: 50px;
+  color: #00DC81;
+  width: 200px;
+  padding: 5px 10px;
+  font-weight: 800;
+  transition: 0.2s ease-in-out;
+}
+.parametres button:hover{
+  color: white;
+  background: #00DC81;
 }
 </style>
 
