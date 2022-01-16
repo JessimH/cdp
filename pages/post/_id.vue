@@ -1,37 +1,37 @@
 <template>
-  <div class="index">
+  <div v-if="post" class="index">
     <Header title="Post" :back="true"/>
     <div class="current_post">
       <div class="current_post_top">
          <NuxtLink class="post_link mr-2" to="/profile/jessim">
             <div class="post_profile_pic">
-                <img src="https://pbs.twimg.com/profile_images/1462725045281820672/YU2hzUcr_400x400.jpg" alt="">
+                <img :src="post.user.url_image" alt="">
             </div>
         </NuxtLink>
-           <p class="post_header"><span>Sato</span> <br> @dzsatoru</p>
+           <p class="post_header"><span>{{post.user.name}}</span> <br> @{{post.user.name}}</p>
       </div>
        <div class="post_body">
            <div class="post_content">
-                <p>l'avenir appartient à ceux qui font croire au monde que l'avenir appartient à ceux qui se lèvent tôt</p>
-                <div class="post_img">
-                    <img src="https://pbs.twimg.com/media/FI6G3LTWYAM4PzU?format=jpg&name=900x900" alt="">
+                <p>{{post.content}}</p>
+                <div v-if="post.url_image" class="post_img">
+                    <img :src="post.url_image" alt="">
                 </div>
-                <p class="timestamp mt-2">il y a 1 h</p>
+                <p class="timestamp mt-2">{{post.created_at}}</p>
            </div>
            <div class="post_infos">
-                <p class="timestamp mr-5"><span>5k</span> j'aime</p>
-                <p class="timestamp"><span>19k</span> commentaires</p>
+                <p class="timestamp mr-5"><span>{{post.likes_count}}</span> j'aime</p>
+                <p class="timestamp"><span>{{post.comments.length}}</span> commentaires</p>
            </div>
            <div class="post_btns">
-               <button>
+               <button @click="likePost()">
                     <b-icon-heart class="post_icon"></b-icon-heart>
-                    5k
+                    {{post.likes_count}}
                 </button>
            </div>
        </div>
     </div>
-    <NewPost placeholder="Commenter"/>
-    <Timeline/>
+    <NewPost :post='post' formType="comment" placeholder="Commenter"/>
+    <Timeline :comments="post.comments"/>
   </div>
 </template>
 
@@ -43,6 +43,7 @@ import {
   BIconChat,
   
 } from 'bootstrap-vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -51,6 +52,38 @@ export default {
     BIconHeartFill,
     BIconChat,
   },
+  data() {
+        return {
+          loading: false,
+          postId: this.$route.params.id
+        }
+      },
+    computed: {
+        ...mapGetters(['user']),
+        ...mapGetters(['post']),
+        // ...mapGetters(['feedCus']),
+    },
+    methods:{
+        // ...mapActions(['getFeedCus']),
+        ...mapActions(['getPost']),
+        ...mapActions(['like']),
+        likePost(){
+            let data = {
+                type: 'post',
+                post_id: this.post.id
+            }
+            this.like(data)
+        },
+        getDataPost(id) {
+          this.loading = true
+          this.getPost(id)
+          this.loading = false
+        },
+    }, 
+    async mounted() {
+      // this.getCommentData(this.postId)
+      this.getDataPost(this.postId)
+    }
 }
 </script>
 

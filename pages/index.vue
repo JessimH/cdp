@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <Header title="Accueil"/>
-    <NewPost placeholder="Raconte moi ta vie" />
+    <NewPost post='' formType="post" placeholder="Raconte moi ta vie" />
     <div v-if="loading">Loadings</div>
     <Timeline :feedCus="feedCus"/>
   </div>

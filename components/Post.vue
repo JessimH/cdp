@@ -18,7 +18,7 @@
                     <b-icon-heart class="post_icon"></b-icon-heart>
                     {{post.likes_count}}
                 </button>
-                <NuxtLink class="post_link" :to="'/post/'+post.id">
+                <NuxtLink v-if="post.comments" class="post_link" :to="'/post/'+post.id">
                     <button> 
                         <b-icon-chat class="post_icon"></b-icon-chat>
                         {{post.comments.length}}

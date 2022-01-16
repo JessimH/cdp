@@ -31,6 +31,9 @@ export const getters = {
     feedCus(state) {
         return state.feedCus.data
     },
+    postComments(state) {
+        return state.postComment.data
+    }
 }
 
 
@@ -198,30 +201,13 @@ export const actions = {
             method: 'get',
             url: `https://social-jje-api.herokuapp.com/api/posts/${id}`,
             headers: {
-                'Authorization': `Bearer ${getters.token}`
+                'Authorization': `Bearer ${getters.token}`,
             }
         })
             .then((response) => {
-                const post = response.data.post
+                const post = response.data.data
                 // console.log(post)
                 commit('getPost', post)
-            })
-            .catch(error => {
-                // console.log("ERROR ARGS:", loginForm)
-                console.log(error)
-            });
-    },
-    async deletePost({ getters, dispatch }, id) {
-        axios({
-            method: 'delete',
-            url: `https://partner-pro-api.herokuapp.com/api/posts/${id}`,
-            headers: {
-                'Authorization': `Bearer ${getters.token}`
-            }
-        })
-            .then((response) => {
-                // console.log(response)
-                dispatch('getFeedPro')
             })
             .catch(error => {
                 // console.log("ERROR ARGS:", loginForm)
@@ -248,27 +234,21 @@ export const actions = {
                 console.log(error.response)
             });
     },
-    async comment({ state, getters, dispatch }, commentForm) {
-        console.log(state.post)
+    async comment({getters }, data) {
         axios({
             method: 'post',
-            url: `https://partner-pro-api.herokuapp.com/api/comment/${commentForm.post_id}`,
+            url: `https://social-jje-api.herokuapp.com/api/comments`,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${getters.token}`
             },
-            data: {
-                body: commentForm.body
-            }
+            data: data
         })
             .then((response) => {
-                // console.log("REGISTER:", response.data)
                 console.log(response)
-                // dispatch('getPost')
             })
             .catch(error => {
-                // console.log(registerForm)
                 console.log(error.response)
             });
     },
@@ -313,5 +293,5 @@ export const mutations = {
     },
     getFeedCus(state, data) {
         state.feedCus.data = data
-    },
+    }
 }

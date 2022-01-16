@@ -1,13 +1,26 @@
 <template>
-    <div class="new_post">
+    <div v-if="formType === 'comment' && post" class="new_post">
+         <NuxtLink class="post_link" to="/profile/jessim">
+            <div class="post_profile_pic">
+                <img :src="post.user.url_image" alt="">
+            </div>
+        </NuxtLink>
+       <div class="post_body">
+           <form @submit="commentPost()">
+                <input type="text" :placeholder="placeholder">
+                <button type="submit">Envoyer</button>
+           </form>
+       </div>
+    </div>
+    <div v-else class="new_post">
          <NuxtLink class="post_link" to="/profile/jessim">
             <div class="post_profile_pic">
                 <img :src="user.data.url_image" alt="">
             </div>
         </NuxtLink>
        <div class="post_body">
-           <form action="">
-                <input type="text" :placeholder="placeholder">
+           <form>
+                <input  type="text" :placeholder="placeholder">
                 <button type="submit">Envoyer</button>
            </form>
        </div>
@@ -27,16 +40,34 @@ import { mapGetters, mapActions } from 'vuex'
 
 
 export default {
-    props: ['placeholder'],
+    props: ['placeholder', 'post', 'formType'],
     components: {
         BIcon,
         BIconHeart,
         BIconHeartFill,
         BIconChat,
+    }, 
+    data() {
+        return {
+            commentContent: '',
+            post_id: this.post.id,
+            type: ''
+        }
     },
     computed: {
         ...mapGetters(['user']),
     },
+     methods:{
+        ...mapActions(['comment']),
+        commentPost(){
+            let data = {
+                content: this.commentContent,
+                post_id: this.post_id
+            }
+            this.comment(data)
+            this.$route.push('/')
+        }
+    }
 }
 </script>
 
